@@ -16,6 +16,10 @@ app.use(express.json())
 
 
 
+app.get("/", (req, res) => {
+    res.send("Welcome to Clerk API")
+})
+
 
 mongoose.connect("mongodb+srv://aasiyomaxmedapdi:f4tbzgf1rCTPsYzc@cluster0.ewjni.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => {
