@@ -36,8 +36,8 @@ export const  clerkWebhook = async (req, res) => {
                     clerkId: data.id,
                     email: data.email_addresses[0],
                     photo: data.image_url,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
+                    firstName: data.first_name,
+                    lastName: data.last_name,
                     creditBalance: data.creditBalance
                 }
 
@@ -50,14 +50,14 @@ export const  clerkWebhook = async (req, res) => {
                 case "user.updated": {
 
                     const userData = {
-                  
+                        clerkId: data.id,
                         email: data.email_addresses[0],
                         photo: data.image_url,
-                        firstName: data.firstName,
-                        lastName: data.lastName,
+                        firstName: data.first_name,
+                        lastName: data.last_name,
                         creditBalance: data.creditBalance
                     }
-
+    
 
                     await  User.findOneAndUpdate({clerkId: data.id}, userData)
 
