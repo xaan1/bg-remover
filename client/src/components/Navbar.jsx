@@ -1,16 +1,32 @@
 
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { assets } from '../assets/assets';
 
 import { Link } from 'react-router-dom';
 
 
-import { SignOutButton, useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { SignOutButton, useAuth, useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { AppContext } from '../context/AppContex';
 const Navbar = () => {
 
   const { openSignIn } = useClerk();
 
-  const {user , isSignedIn}  = useUser();
+  const {user , isSignedIn , }  = useUser();
+
+  const { 
+    credit,
+    loadCreditBalance,
+    setCredit,
+    vite_bake_url
+   } =  useContext(AppContext)
+
+
+  useEffect(() => {
+    loadCreditBalance()
+},[isSignedIn])
+
+
+
 
   console.log(user);
   return (
@@ -23,9 +39,20 @@ const Navbar = () => {
 
  {
   isSignedIn ? (
-    <>
+    <div className='flex items-center gap-2 lg:gap-3'>
+      <button
+
+      className='flex items-center gap-2 bg-white text-zinc-800 px-4 py-2 sm:py-3 text-sm rounded-full'
+      >
+        <img src={assets.credit_icon} alt='credit' className='w-6' />
+        <span className='text-zinc-800 font-semibold'>{credit}</span>
+      </button>
+      <p className='text-zinc-800 font-semibold hidden sm:block'>
+        {user.fullName}
+      </p>
+
     <UserButton />
-    </>
+    </div>
 
   )   : (
 

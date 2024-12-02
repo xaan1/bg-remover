@@ -27,7 +27,7 @@ export const clerkWebhook = async (req, res) => {
           photo: data.image_url,
           firstName: data.first_name,
           lastName: data.last_name,
-          creditBalance: data.creditBalance || 0,
+          creditBalance: data.creditBalance || 5,
         };
 
         await User.create(userData);
@@ -64,3 +64,31 @@ export const clerkWebhook = async (req, res) => {
     return res.status(400).json({ message: "Webhook not verified", success: false });
   }
 };
+
+
+
+
+
+
+
+export const userCreditBalance = async (req, res) => {
+  try {
+    const { clerkId } = req.body;
+
+    
+
+
+    const user = await User.findOne({clerkId})
+
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    return res.status(200).json({  success : true   , creditBalance: user.creditBalance, success: true });
+
+  } catch (e) {
+    console.log(e, "Error in updating credit balance");
+    return res.status(400).json({ message: "Error in updating credit balance", success: false });
+  }
+}
